@@ -1,0 +1,124 @@
+#==============================================================
+# DBMS name:      Microsoft Access 2007
+# Created on:     3/4/2021 10:19:01 PM
+#==============================================================
+
+
+RemoveJoin C=FK_ARTISTS_CREATED_B_PAINTING T=ARTISTS P=PAINTINGS;
+
+RemoveJoin C=FK_EXIBITIO_HOLD_ARTGALLE T=EXIBITION P=ARTGALLERY;
+
+RemoveJoin C=FK_GALERY_M_HAS_ARTGALLE T=GALERY_MANAGERS P=ARTGALLERY;
+
+RemoveJoin C=FK_INCOME_S_INCOME_ARTGALLE T=INCOME_SHEET P=ARTGALLERY;
+
+RemoveJoin C=FK_PAINTING_CONTAINS_ARTGALLE T=PAINTINGS P=ARTGALLERY;
+
+RemoveTble C=ARTGALLERY;
+
+RemoveTble C=ARTISTS;
+
+RemoveTble C=EXIBITION;
+
+RemoveTble C=GALERY_MANAGERS;
+
+RemoveTble C=INCOME_SHEET;
+
+RemoveTble C=PAINTINGS;
+
+#==============================================================
+# Table: ARTGALLERY
+#==============================================================
+CreateTble C=ARTGALLERY N="ArtGallery"
+(
+   C=GALLERYID T="COUNTER" P=Yes M=Yes N="GalleryID" Z=false,
+   C=NAME T="VARCHAR(255)" P=No M=Yes N="Name" Z=false,
+   C=ESTABLISHMENTDATE T="DATE" P=No M=Yes N="EstablishmentDate" Z=false,
+   C=ADDRESS T="NOTE" P=No M=Yes N="Address" Z=false
+);
+
+#==============================================================
+# Table: ARTISTS
+#==============================================================
+CreateTble C=ARTISTS N="Artists"
+(
+   C=ARTISTID T="COUNTER" P=Yes M=Yes N="ArtistID" Z=false,
+   C=PAINTINGID T="INTEGER" P=No M=No N="PaintingID" Z=false,
+   C=NAME T="VARCHAR(255)" P=No M=Yes N="Name" Z=false,
+   C=BIRTHDATE T="DATE" P=No M=Yes N="BirthDate" Z=false,
+   C=GENDER T="VARCHAR(200)" P=No M=Yes N="Gender" Z=false
+);
+
+#==============================================================
+# Table: EXIBITION
+#==============================================================
+CreateTble C=EXIBITION N="Exibition"
+(
+   C=MODERATOR T="VARCHAR(255)" P=Yes M=Yes N="Moderator" Z=false,
+   C=GALLERYID T="INTEGER" P=No M=No N="GalleryID" Z=false,
+   C="DATE" T="DATE" P=No M=Yes N="Date" Z=false,
+   C=STUDIOSIZE T="FLOAT" P=No M=Yes N="StudioSize" Z=false,
+   C=ADDRESS T="NOTE" P=No M=Yes N="Address" Z=false
+);
+
+#==============================================================
+# Table: GALERY_MANAGERS
+#==============================================================
+CreateTble C=GALERY_MANAGERS N="Galery Managers"
+(
+   C=MANAGERID T="COUNTER" P=Yes M=Yes N="ManagerID" Z=false,
+   C=GALLERYID T="INTEGER" P=No M=No N="GalleryID" Z=false,
+   C=FIRSTNAME T="VARCHAR(255)" P=No M=Yes N="FirstName" Z=false,
+   C=LASTNAME T="VARCHAR(255)" P=No M=Yes N="LastName" Z=false,
+   C=BIRTHDATE T="DATE" P=No M=Yes N="BirthDate" Z=false
+);
+
+#==============================================================
+# Table: INCOME_SHEET
+#==============================================================
+CreateTble C=INCOME_SHEET N="Income Sheet"
+(
+   C=SHEETID T="COUNTER" P=Yes M=Yes N="SheetID" Z=false,
+   C=GALLERYID T="INTEGER" P=No M=No N="GalleryID" Z=false,
+   C=SOLDPAINTINGS T="CURRENCY" P=No M=Yes N="SoldPaintings" Z=false,
+   C=AUCTIONS T="CURRENCY" P=No M=Yes N="Auctions" Z=false,
+   C=ENTRYTICKETS T="CURRENCY" P=No M=Yes N="EntryTickets" Z=false
+);
+
+#==============================================================
+# Table: PAINTINGS
+#==============================================================
+CreateTble C=PAINTINGS N="Paintings"
+(
+   C=PAINTINGID T="COUNTER" P=Yes M=Yes N="PaintingID" Z=false,
+   C=GALLERYID T="INTEGER" P=No M=No N="GalleryID" Z=false,
+   C=PAINTTYPE T="VARCHAR(300)" P=No M=Yes N="PaintType" Z=false,
+   C=CREATIONDATE T="DATE" P=No M=Yes N="CreationDate" Z=false,
+   C=PAINTINGSIZE T="FLOAT" P=No M=Yes N="PaintingSize" Z=false
+);
+
+CreateJoin C=FK_ARTISTS_CREATED_B_PAINTING T=ARTISTS P=PAINTINGS D=restrict U=restrict
+(
+      P=PAINTINGID F=PAINTINGID
+);
+
+CreateJoin C=FK_EXIBITIO_HOLD_ARTGALLE T=EXIBITION P=ARTGALLERY D=restrict U=restrict
+(
+      P=GALLERYID F=GALLERYID
+);
+
+CreateJoin C=FK_GALERY_M_HAS_ARTGALLE T=GALERY_MANAGERS P=ARTGALLERY D=restrict U=restrict
+(
+      P=GALLERYID F=GALLERYID
+);
+
+CreateJoin C=FK_INCOME_S_INCOME_ARTGALLE T=INCOME_SHEET P=ARTGALLERY D=restrict U=restrict
+(
+      P=GALLERYID F=GALLERYID
+);
+
+CreateJoin C=FK_PAINTING_CONTAINS_ARTGALLE T=PAINTINGS P=ARTGALLERY D=restrict U=restrict
+(
+      P=GALLERYID F=GALLERYID
+);
+
